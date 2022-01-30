@@ -20,11 +20,17 @@ namespace Instagram.DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Friendship>().HasKey(i => new { i.TargetUserId, i.DestinationUserId });
-            modelBuilder.Entity<Friendship>().HasOne(i => i.TargetUser).WithMany(i => i.Friendships).HasForeignKey(i => i.TargetUserId);
-            modelBuilder.Entity<Friendship>().HasOne(i => i.DestinationUser).WithMany(i => i.Friendships).HasForeignKey(i => i.DestinationUserId);
+            modelBuilder.Entity<Friendship>().HasOne(i => i.TargetUser).WithMany(i => i.TargetFriendships).HasForeignKey(i => i.TargetUserId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Friendship>().HasOne(i => i.DestinationUser).WithMany(i => i.DestinationFriendships).HasForeignKey(i => i.DestinationUserId).OnDelete(DeleteBehavior.NoAction);
+            
             modelBuilder.Entity<User>().HasMany(i => i.Posts).WithOne(i => i.User).HasForeignKey(i => i.UserId);
             modelBuilder.Entity<Post>().HasOne(i => i.User).WithMany(i => i.Posts).HasForeignKey(i => i.UserId);
 
+            modelBuilder.Entity<User>().HasMany(i => i.Comments).WithOne(i => i.User).HasForeignKey(i => i.UserId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Comment>().HasOne(i => i.User).WithMany(i => i.Comments).HasForeignKey(i => i.UserId).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Post>().HasMany(i => i.Comments).WithOne(i => i.Post).HasForeignKey(i => i.PostId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Comment>().HasOne(i => i.Post).WithMany(i => i.Comments).HasForeignKey(i => i.PostId).OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }

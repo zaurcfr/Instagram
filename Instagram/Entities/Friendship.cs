@@ -20,5 +20,6 @@ namespace Instagram.Entities
         public int DestinationUserId { get; set; }
         public User DestinationUser { get; set; }
         public Status Status { get; set; }
+        
     }
 }
