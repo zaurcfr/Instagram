@@ -28,8 +28,8 @@ namespace Instagram.Controllers
             var ent = context.Entities.FirstOrDefault(i => i.Email == entity.Email && i.Password == entity.Password);
             if (ent != null)
             {
-                if (ent.Discriminator == "Admin") return RedirectToAction("AdminPanel", "Admin");
-                else if (ent.Discriminator == "User") return RedirectToAction("UserPanel", "User");
+                if (ent.Discriminator == "Admin") return Redirect("/Admin/Admin/Index");
+                else if (ent.Discriminator == "User") return Redirect("/User/Home/Index");
             }
             return RedirectToAction(nameof(Login));
         }

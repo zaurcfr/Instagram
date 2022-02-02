@@ -1,0 +1,18 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@foreach (var item in Model.Posts)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Context</p>
+            <a href="#" class="card-link">Like</a>
+            <a href="#" class="card-link">Comment</a>
+        </div>
+    </div>
+}
+
